@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:heartbeats/Screens/Navigation/ButtomNavigator.dart';
 import 'package:heartbeats/Screens/Sensor_Screen.dart';
 
 void main() {
@@ -12,7 +13,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: SensorScreen(),
+      debugShowCheckedModeBanner: false,
+      home: NavigatorScreen(),
     );
   }
 }
