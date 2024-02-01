@@ -5,7 +5,6 @@ import 'package:heartbeats/Screens/Sensor_Screen.dart';
 import 'package:heartbeats/Screens/Settings_Screen.dart';
 import 'package:heartbeats/constants/Constants.dart';
 
-
 class NavigatorScreen extends StatefulWidget {
   const NavigatorScreen({super.key});
 
@@ -14,11 +13,11 @@ class NavigatorScreen extends StatefulWidget {
 }
 
 class _NavigatorScreenState extends State<NavigatorScreen> {
-  int _pageIndex = 0; 
+  int _pageIndex = 0;
 
   final List<Widget> _pages = [
-    SensorScreen(), 
-    SecondScreen(),    
+    SensorScreen(),
+    SecondScreen(),
     SettingScreen(),
   ];
 
@@ -32,7 +31,7 @@ class _NavigatorScreenState extends State<NavigatorScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: primaryColor,
-      body: _pages.elementAt(_pageIndex), 
+      body: _pages.elementAt(_pageIndex),
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: primaryColor,
         animationDuration: const Duration(milliseconds: 300),
@@ -41,12 +40,12 @@ class _NavigatorScreenState extends State<NavigatorScreen> {
           SizedBox(
             height: 40,
             width: 40,
-            child: Image.asset('assets/icons/heart-rate-monitor.png'),
+            child: Image.asset('assets/icons/heartSensor.png'),
           ),
           SizedBox(
             height: 40,
             width: 40,
-            child: Image.asset('assets/icons/heart.png'),
+            child: Image.asset('assets/icons/heartRate.png'),
           ),
           SizedBox(
             height: 40,
