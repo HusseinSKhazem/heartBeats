@@ -42,7 +42,7 @@ class _SecondScreenState extends State<SecondScreen> {
              Padding(
   padding: const EdgeInsets.all(16.0),
   child: Container(
-    height: 200, // Set a fixed height for the chart
+    height: 200, 
     child: LineChart(
       LineChartData(
         gridData: FlGridData(show: false),
