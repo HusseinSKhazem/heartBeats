@@ -16,6 +16,11 @@ class LoginModel with ChangeNotifier {
     _username = username;
   }
 
+  Future<String> getUsername() async {
+  final prefs = await SharedPreferences.getInstance();
+  return prefs.getString('username') ?? 'John Doe';
+}
+
   void setPassword(String password) {
     _password = password;
   }
@@ -31,6 +36,7 @@ class LoginModel with ChangeNotifier {
 
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('token', _token);
+      await prefs.setString('username', _username);
       notifyListeners();
     } catch (e) {
       _errorMessage = 'Failed to login: $e';
