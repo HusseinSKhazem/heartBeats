@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:heartbeats/Repository/Provider/ProfielPicture_Updater.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:heartbeats/Repository/Provider/Login_Model.dart';
 import 'package:heartbeats/Repository/Provider/ProfilePicture_Model.dart';
@@ -21,7 +23,8 @@ class _SettingScreenState extends State<SettingScreen> {
       final loginModel = Provider.of<LoginModel>(context, listen: false);
       _username = await loginModel.getUsername();
       if (_username != null) {
-        final userProfileProvider = Provider.of<UserProfileProvider>(context, listen: false);
+        final userProfileProvider =
+            Provider.of<UserProfileProvider>(context, listen: false);
         userProfileProvider.fetchUserProfileImage(_username!);
       }
     });
@@ -55,9 +58,23 @@ class _SettingScreenState extends State<SettingScreen> {
                         if (userProfileProvider.imageBytes == null)
                           const CircularProgressIndicator()
                         else
-                          CircleAvatar(
-                            radius: 50,
-                            backgroundImage: MemoryImage(userProfileProvider.imageBytes!),
+                          Stack(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                
+                                  _pickAndUploadImage();
+                                },
+                                child: CircleAvatar(
+                                  radius: 50,
+                                  backgroundImage:
+                                      userProfileProvider.imageBytes != null
+                                          ? MemoryImage(
+                                              userProfileProvider.imageBytes!)
+                                          : null,
+                                ),
+                              ),
+                            ],
                           ),
                         const SizedBox(height: 10),
                         Text(
@@ -109,15 +126,31 @@ class _SettingScreenState extends State<SettingScreen> {
     );
   }
 
-  Widget _buildListTile({required IconData icon, required String title, required VoidCallback onTap}) {
+  Widget _buildListTile(
+      {required IconData icon,
+      required String title,
+      required VoidCallback onTap}) {
     return ListTile(
       leading: Icon(icon, color: primaryColor),
       title: Text(
         title,
-        style: const TextStyle(color: primaryColor, fontSize: 20, fontWeight: FontWeight.bold),
+        style: const TextStyle(
+            color: primaryColor, fontSize: 20, fontWeight: FontWeight.bold),
       ),
-      trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: primaryColor),
+      trailing:
+          const Icon(Icons.arrow_forward_ios, size: 16, color: primaryColor),
       onTap: onTap,
     );
+  }
+
+  Future<void> _pickAndUploadImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      final bytes = await pickedFile.readAsBytes();
+      print(_username);
+      await ProfilePictureUpdater.uploadImage(_username!, bytes);
+    }
   }
 }

@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:heart_bpm/heart_bpm.dart';
+import 'package:heartbeats/Repository/Tone-Generator/ToneGenerator.dart';
 import 'package:heartbeats/constants/Constants.dart';
 
 
@@ -19,7 +20,8 @@ class _SensorScreenState extends State<SensorScreen> {
   double nextIndex = 0;
   int? bpmValue;
   Timer? timer;
-
+ ToneGenerator toneGenerator = ToneGenerator();
+ List<int> bpmReadings = [];
   static const int dataMaxLength = 60;
   static const double viewportWidth = 20;
   double maxY = 120;
@@ -40,6 +42,11 @@ class _SensorScreenState extends State<SensorScreen> {
     setState(() {
       timer?.cancel();
     });
+     if (bpmReadings.isNotEmpty) {
+    final int averageBpm = bpmReadings.reduce((a, b) => a + b) ~/ bpmReadings.length;
+    toneGenerator.playTone(averageBpm.toDouble()); 
+  }
+  bpmReadings.clear();
   }
 
   void addBPMData(double value) {
@@ -120,6 +127,7 @@ class _SensorScreenState extends State<SensorScreen> {
                 onBPM: (int value) {
                   setState(() {
                     bpmValue = value;
+                    bpmReadings.add(value);
                   });
                 },
                 child: Row(
@@ -163,7 +171,7 @@ Widget buildBPMChartCard() {
             spots: bpmData,
             isCurved: true,
             color: Colors.redAccent,
-            barWidth: 4, // Line thickness.
+            barWidth: 4, 
             isStrokeCapRound: true,
             dotData: const FlDotData(show: false),
             belowBarData: BarAreaData(show: false),

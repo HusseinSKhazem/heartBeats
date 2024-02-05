@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:heartbeats/Repository/Provider/Login_Model.dart';
 import 'package:heartbeats/Repository/Provider/ProfilePicture_Model.dart';
+import 'package:heartbeats/Repository/Provider/SignUp_Model.dart';
 import 'package:heartbeats/Repository/Provider/Token_Model.dart';
 import 'package:heartbeats/Screens/Authentication/Login_Screen.dart';
 import 'package:heartbeats/Screens/Navigation/ButtomNavigator.dart';
@@ -23,6 +24,7 @@ void main() {
         ChangeNotifierProvider(create: (context) => AuthProvider()),
         ChangeNotifierProvider(create: (context) => LoginModel()),
         ChangeNotifierProvider(create: (context) => UserProfileProvider()),
+        ChangeNotifierProvider(create: (context) => SignUpModel()),
       ],
       child: const MyApp(),
     ),

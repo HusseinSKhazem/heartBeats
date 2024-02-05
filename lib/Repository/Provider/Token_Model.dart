@@ -24,7 +24,6 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // Method to handle logout
   void logout() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('token');
