@@ -1,7 +1,9 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:heartbeats/Repository/Provider/SignUp_Model.dart';
 import 'package:heartbeats/Screens/Authentication/Login_Screen.dart';
+import 'package:heartbeats/Screens/errors/No_Internet.dart';
 import 'package:provider/provider.dart';
 import 'package:animate_do/animate_do.dart';
 
@@ -17,7 +19,7 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
+  bool _isLoading = false;
   @override
   void dispose() {
     _usernameController.dispose();
@@ -26,11 +28,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void _signUp(SignUpModel signUpModel) async {
+
+ var connectivityResult = await (Connectivity().checkConnectivity());
+ if (connectivityResult == ConnectivityResult.none) {
+  Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const NoInternetScreen()),
+      );
+ }
+    if (_isLoading) return;
+    setState(() {
+      _isLoading = true;
+    });
     signUpModel.setName(_usernameController.text);
     signUpModel.setPassword(_passwordController.text);
 
     final response = await signUpModel.signUp();
-
+    if (!mounted) return;
+    setState(() {
+      _isLoading = false;
+    });
     if (response == 200) {
       Navigator.pushReplacement(
         context,
@@ -48,45 +65,46 @@ class _SignUpScreenState extends State<SignUpScreen> {
     final signUpModel = Provider.of<SignUpModel>(context);
 
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-            primaryColor,
-            secondaryColor,
-            Color.fromARGB(255, 200, 200, 200)
-          ]),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            const SizedBox(height: 80),
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  FadeInUp(
-                    duration: const Duration(milliseconds: 1000),
-                    child: const Text(
-                      "Sign Up",
-                      style: TextStyle(color: Colors.white, fontSize: 40),
+      resizeToAvoidBottomInset: true,
+      body: SingleChildScrollView(
+        physics: const NeverScrollableScrollPhysics(),
+        child: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(begin: Alignment.topCenter, colors: [
+              primaryColor,
+              secondaryColor,
+              Color.fromARGB(255, 200, 200, 200)
+            ]),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const SizedBox(height: 80),
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    FadeInUp(
+                      duration: const Duration(milliseconds: 1000),
+                      child: const Text(
+                        "Sign Up",
+                        style: TextStyle(color: Colors.white, fontSize: 40),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 10),
-                  FadeInUp(
-                    duration: const Duration(milliseconds: 1300),
-                    child: const Text(
-                      "Create New Account",
-                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    const SizedBox(height: 10),
+                    FadeInUp(
+                      duration: const Duration(milliseconds: 1300),
+                      child: const Text(
+                        "Create New Account",
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            Expanded(
-              child: Container(
+              const SizedBox(height: 20),
+              Container(
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -118,7 +136,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               Container(
                                 padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(
-                                  border: Border(bottom: BorderSide(color: Colors.grey.shade200)),
+                                  border: Border(
+                                      bottom: BorderSide(
+                                          color: Colors.grey.shade200)),
                                 ),
                                 child: TextField(
                                   controller: _usernameController,
@@ -149,16 +169,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       FadeInUp(
                         duration: const Duration(milliseconds: 1600),
                         child: MaterialButton(
-                          onPressed: signUpModel.isLoading ? null : () => _signUp(signUpModel),
+                          onPressed: () =>
+                              _signUp(signUpModel), // Call _signUp when pressed
                           height: 50,
                           color: secondaryColor,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50)),
                           child: Center(
-                            child: signUpModel.isLoading
-                                ? const CircularProgressIndicator(color: Colors.white)
-                                : const Text(
+                            child: _isLoading
+                                ? const CircularProgressIndicator(color: primaryColor)
+                                :const Text(
                                     "Sign Up",
-                                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
                                   ),
                           ),
                         ),
@@ -175,8 +199,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

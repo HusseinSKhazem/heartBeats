@@ -44,7 +44,8 @@ dependencies:
   provider: ^6.1.1
   audioplayers: ^5.2.1
   image_picker: ^1.0.7
-
+  connectivity: ^3.0.3
+  connectivity_plus: ^5.0.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

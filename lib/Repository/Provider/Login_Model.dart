@@ -39,7 +39,7 @@ class LoginModel with ChangeNotifier {
       await prefs.setString('username', _username);
       notifyListeners();
     } catch (e) {
-      _errorMessage = 'Failed to login: $e';
+      _errorMessage = 'Incorrect name or password';
       notifyListeners();
     } finally {
       _isLoading = false;
