@@ -187,6 +187,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                         ),
                       ),
+                      const SizedBox(height: 25,),
+                       FadeInUp(
+                        duration: const Duration(milliseconds: 1700),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const LoginScreen()),
+                            );
+                          },
+                          child: const Text(
+                            "Alreadyhave an account? login now",
+                            style: TextStyle(
+                                color: Colors.grey,
+                                decoration: TextDecoration.underline),
+                          ),
+                        ),
+                      ),
+
                       if (signUpModel.errorMessage.isNotEmpty)
                         Padding(
                           padding: const EdgeInsets.all(8.0),

@@ -62,16 +62,12 @@ class _SettingScreenState extends State<SettingScreen> {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                
                                   _pickAndUploadImage();
                                 },
                                 child: CircleAvatar(
                                   radius: 50,
-                                  backgroundImage:
-                                      userProfileProvider.imageBytes != null
-                                          ? MemoryImage(
-                                              userProfileProvider.imageBytes!)
-                                          : null,
+                                  backgroundImage: MemoryImage(
+                                      userProfileProvider.imageBytes!),
                                 ),
                               ),
                             ],

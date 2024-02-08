@@ -6,7 +6,8 @@ import 'package:http/http.dart' as http;
 class UserProfileProvider with ChangeNotifier {
   Uint8List? _imageBytes;
 
-  Uint8List get imageBytes => _imageBytes!;
+  
+  Uint8List? get imageBytes => _imageBytes;
 
   Future<void> fetchUserProfileImage(String username) async {
     final response = await http.get(

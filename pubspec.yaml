@@ -46,6 +46,7 @@ dependencies:
   image_picker: ^1.0.7
   connectivity: ^3.0.3
   connectivity_plus: ^5.0.2
+  device_info_plus: ^9.1.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -71,6 +72,7 @@ flutter:
  # To add assets to your application, add an assets section, like this:
   assets:
       - assets/icons/
+      - assets/images/
       - assets/tones/high-bpm-music.mp3
       - assets/tones/mid-bpm-music.mp3
       - assets/tones/low-bpm-music.mp3

@@ -6,6 +6,7 @@ import 'package:heartbeats/Repository/Provider/SignUp_Model.dart';
 import 'package:heartbeats/Repository/Provider/Token_Model.dart';
 import 'package:heartbeats/Screens/Authentication/Login_Screen.dart';
 import 'package:heartbeats/Screens/Navigation/ButtomNavigator.dart';
+import 'package:heartbeats/Screens/Splash_Screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
     final authProvider = Provider.of<AuthProvider>(context);
      return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: authProvider.isAuthenticated ? const NavigatorScreen() : const LoginScreen(),
+      home:SplashScreen(),
     );
   }
 }

@@ -8,6 +8,9 @@ class ToneGenerator {
     await audioPlayer.setSource(AssetSource(audioPath)); 
     await audioPlayer.resume(); 
   }
+  void stopTone() async{
+    await audioPlayer.stop();
+  }
 
  String selectAudioFileBasedOnBpm(double bpm) {
   const lowBpmThreshold = 70;

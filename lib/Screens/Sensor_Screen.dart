@@ -67,6 +67,7 @@ class _SensorScreenState extends State<SensorScreen> {
 
   @override
   void dispose() {
+    toneGenerator.stopTone();
     timer?.cancel();
     super.dispose();
   }
@@ -180,5 +181,7 @@ Widget buildBPMChartCard() {
       ),
     ),
   );
+  
 }
+
 }
