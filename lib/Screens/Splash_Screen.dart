@@ -39,8 +39,10 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
    Future.delayed(const Duration(seconds: 5), () {
   final authProvider = Provider.of<AuthProvider>(context, listen: false);
 
+  //if token is founded = true
   if (authProvider.isAuthenticated) {
     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => const NavigatorScreen()));
+    //if token is not founded please login 
   } else {
     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => const LoginScreen()));
   }

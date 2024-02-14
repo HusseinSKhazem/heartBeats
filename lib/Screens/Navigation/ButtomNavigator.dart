@@ -35,7 +35,7 @@ class _NavigatorScreenState extends State<NavigatorScreen> {
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: primaryColor,
         animationDuration: const Duration(milliseconds: 300),
-        onTap: _onItemTapped, // Update the selected index
+        onTap: _onItemTapped, 
         items: [
           SizedBox(
             height: 40,

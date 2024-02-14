@@ -12,13 +12,14 @@ class LoginModel with ChangeNotifier {
   bool get isLoading => _isLoading;
   String get errorMessage => _errorMessage;
   String get token => _token;
+
   void setUsername(String username) {
     _username = username;
   }
 
   Future<String> getUsername() async {
   final prefs = await SharedPreferences.getInstance();
-  return prefs.getString('username') ?? 'John Doe';
+  return prefs.getString('username') ?? 'User 1';
 }
 
   void setPassword(String password) {
